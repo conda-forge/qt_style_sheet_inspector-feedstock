@@ -1,31 +1,31 @@
 {% set name = "qt_style_sheet_inspector" %}
 {% set version = "0.1.0" %}
-{% set sha256 = "76d019764bc1ca988a0dfec59f4fad9a7ea7c8122f9549e3650e954aa9d3262e" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 76d019764bc1ca988a0dfec59f4fad9a7ea7c8122f9549e3650e954aa9d3262e
 
 build:
   noarch: python
-  number: 0
-  script: python -m pip install . --no-deps --ignore-installed
+  number: 1
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   
 requirements:
-  build:
-    - python
+  host:
+    - python {{ python_min }}
+    - setuptools
     - pip
   run:
-    - python
+    - python >={{ python_min }}
 
 test:
   requires:
     - pyqt
+    - python {{ python_min }}
   imports:
     - qt_style_sheet_inspector
 
